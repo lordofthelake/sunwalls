@@ -1,0 +1,11 @@
+.DS_Store
+__pycache__/
+.venv/
+generator/out/
+android/assets/
+android/build/
+*.apk
+*.idsig
+*.keystore
+*.heic
+._*
