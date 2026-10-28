@@ -25,14 +25,12 @@ final class SunEngine extends WallpaperService.Engine implements SharedPreferenc
         private String currentKey = "";
         private long fadeStart = 0;
         static final long FADE_MS = 2500, CHECK_MS = 60_000;
-        private float xOffset = 0.5f;
         private boolean visible;
         private int w, h;
 
 
         @Override public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
-            setOffsetNotificationsEnabled(true);
             Prefs.get(svc).registerOnSharedPreferenceChangeListener(this);
         }
         @Override public void onDestroy() {
@@ -51,9 +49,6 @@ final class SunEngine extends WallpaperService.Engine implements SharedPreferenc
             w = width; h = height; update(true);
         }
         @Override public void onSurfaceDestroyed(SurfaceHolder holder) { visible = false; handler.removeCallbacksAndMessages(null); super.onSurfaceDestroyed(holder); }
-        @Override public void onOffsetsChanged(float xo, float yo, float xs, float ys, int xp, int yp) {
-            xOffset = xo; draw();
-        }
 
         private void scheduleCheck() { if (visible) handler.postDelayed(this, CHECK_MS); }
 
@@ -82,10 +77,10 @@ final class SunEngine extends WallpaperService.Engine implements SharedPreferenc
         }
 
         private void drawBitmap(Canvas c, Bitmap b, int alpha) {
-            // scale to fill height, pan horizontally with the launcher's page offset
+            // center-crop, identical to the in-app preview, so what you see is what gets applied
             float scale = Math.max((float) h / b.getHeight(), (float) w / b.getWidth());
             float bw = b.getWidth() * scale, bh = b.getHeight() * scale;
-            float left = -(bw - w) * xOffset, top = -(bh - h) / 2f;
+            float left = -(bw - w) / 2f, top = -(bh - h) / 2f;
             paint.setAlpha(alpha);
             c.drawBitmap(b, null, new Rect((int) left, (int) top, (int) (left + bw), (int) (top + bh)), paint);
         }
