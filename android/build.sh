@@ -5,7 +5,7 @@ cd "$(dirname "$0")"
 SDK="${ANDROID_HOME:-$HOME/Library/Android/sdk}"
 BT="$SDK/build-tools/33.0.1"
 JAR="$SDK/platforms/android-33/android.jar"
-export JAVA_HOME="$(/usr/libexec/java_home)"
+export JAVA_HOME="${JAVA_HOME:-$(/usr/libexec/java_home)}"
 rm -rf build && mkdir -p build/gen build/classes build/dex
 "$BT/aapt2" compile --dir res -o build/res.zip
 "$BT/aapt2" link -o build/unsigned.apk -I "$JAR" --manifest AndroidManifest.xml -A assets \
