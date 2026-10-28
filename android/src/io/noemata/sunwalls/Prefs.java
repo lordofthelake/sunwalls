@@ -10,5 +10,9 @@ final class Prefs {
     static String theme(Context c) { return get(c).getString("theme", "tidewater"); }
     static double lat(Context c) { return Double.longBitsToDouble(get(c).getLong("lat", Double.doubleToLongBits(Sun.DEFAULT_LAT))); }
     static double lon(Context c) { return Double.longBitsToDouble(get(c).getLong("lon", Double.doubleToLongBits(Sun.DEFAULT_LON))); }
+    static boolean autoLocation(Context c) { return get(c).getBoolean("auto", false); }
+    static void setLocation(Context c, double lat, double lon) {
+        get(c).edit().putLong("lat", Double.doubleToLongBits(lat)).putLong("lon", Double.doubleToLongBits(lon)).apply();
+    }
     static String asset(String theme, int frame) { return String.format("%s_%02d.jpg", theme, frame); }
 }

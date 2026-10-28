@@ -41,11 +41,11 @@ winter days are short and dim.
 
 1. Copy `Sunwalls.apk` to your phone and open it. Allow installs from that source when asked, since it isn't
    on the Play Store.
-2. Open **Sunwalls**, pick a theme, tap **Set as wallpaper**.
-3. Optional: **Use my location** so frames follow your sun instead of the default (Berlin).
+2. Open **Sunwalls**, pick a theme, tap **Set as wallpaper** (tap the image to hide or show the controls).
+3. Optional: switch **Use my location** on, or leave it off and type your latitude and longitude. The default is Berlin.
 
-Frames switch with a slow fade, the wallpaper checks once a minute while visible, and it pans gently as you
-swipe between home screens.
+Frames switch with a slow fade, the wallpaper checks once a minute while visible, and it is always framed the same
+way as the in-app preview.
 
 ## Build it yourself
 
