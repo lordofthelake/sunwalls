@@ -1,0 +1,33 @@
+[tools]
+java = "temurin-17"
+python = "3.13"
+uv = "latest"
+gh = "latest"
+android-sdk = "latest"
+
+[env]
+_.python.venv = { path = "generator/.venv", create = true }
+
+[tasks.setup]
+description = "Install the Android SDK packages and Python deps"
+run = [
+  "yes | sdkmanager --licenses >/dev/null || true",
+  "sdkmanager 'build-tools;33.0.1' 'platforms;android-33'",
+  "uv pip install numpy pillow scipy",
+]
+
+[tasks.apk]
+description = "Render portrait frames and build android/Sunwalls.apk"
+dir = "generator"
+run = "python build.py android"
+
+[tasks.apk-quick]
+description = "Rebuild the APK from existing android/assets (skips frame rendering)"
+dir = "android"
+run = "./build.sh"
+
+[tasks.release]
+description = "Build the APK and publish a GitHub release: mise run release v1.2"
+usage = 'arg "<tag>"'
+depends = ["apk"]
+run = 'gh release create "${usage_tag}" generator/out/android/Sunwalls.apk --title "Sunwalls ${usage_tag}" --generate-notes'
